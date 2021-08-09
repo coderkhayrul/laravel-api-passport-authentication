@@ -23,7 +23,7 @@ class BookController extends Controller
     {
     }
 
-    // UPDATE METHORD - PUT
+    // UPDATE METHORD - POST
     public function updateBook(Request $request, $book_id)
     {
     }
