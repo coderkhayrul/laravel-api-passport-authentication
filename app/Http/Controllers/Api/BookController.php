@@ -85,6 +85,27 @@ class BookController extends Controller
     // UPDATE METHORD - POST
     public function updateBook(Request $request, $book_id)
     {
+        $author_id = Auth::user()->id;
+        if (Book::where([
+            'author_id' => $author_id,
+            'id' => $book_id
+        ])->exists()) {
+            $book = Book::find($book_id);
+            $book->title = isset($request->title) ? $request->title : $book->title;
+            $book->description = isset($request->description) ? $request->description : $book->description;
+            $book->book_cost = isset($request->book_cost) ? $request->book_cost : $book->book_cost;
+            $book->update();
+
+            return response()->json([
+                'status' => 1,
+                'message' => 'Author Book updated successfully'
+            ], 200);
+        } else {
+            return response()->json([
+                'status' => 0,
+                'message' => 'Book not found'
+            ], 404);
+        }
     }
 
     // DELETE METHORD - GET
