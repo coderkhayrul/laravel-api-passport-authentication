@@ -68,6 +68,13 @@ class AuthorController extends Controller
     // PROFILE METHORD - GET
     public function profile()
     {
+        $user_data  = Auth::user();
+
+        return response()->json([
+            'status' => true,
+            'message' => "User Profile data",
+            'data' => $user_data
+        ]);
     }
 
     // LOGOUT METHORD - GET
