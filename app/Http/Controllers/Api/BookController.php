@@ -111,5 +111,23 @@ class BookController extends Controller
     // DELETE METHORD - GET
     public function deleteBook($book_id)
     {
+        $author_id = Auth::user()->id;
+        if (Book::where([
+            'author_id' => $author_id,
+            'id' => $book_id
+        ])->exists()) {
+            $book = Book::find($book_id);
+            $book->delete();
+
+            return response()->json([
+                'status' => 1,
+                'message' => 'Author Book Delete Successfully'
+            ], 200);
+        } else {
+            return response()->json([
+                'status' => 0,
+                'message' => 'Book not found'
+            ], 404);
+        }
     }
 }
