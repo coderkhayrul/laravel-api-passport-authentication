@@ -63,6 +63,23 @@ class BookController extends Controller
     // SINGLE BOOKS - GET
     public function singleBook($book_id)
     {
+        $author_id = Auth::user()->id;
+        if (Book::where([
+            'author_id' => $author_id,
+            'id' => $book_id
+        ])->exists()) {
+            $book = Book::find($book_id);
+            return response()->json([
+                'status' => 1,
+                'message' => 'Author Book ',
+                'data' => $book
+            ], 200);
+        } else {
+            return response()->json([
+                'status' => 0,
+                'message' => 'Book not found'
+            ], 404);
+        }
     }
 
     // UPDATE METHORD - POST
