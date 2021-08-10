@@ -22,4 +22,9 @@ class Author extends Model implements AuthentcateContract
         'password',
         'phone_no'
     ];
+
+    public function books()
+    {
+        return $this->hasMany(Book::class);
+    }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Author;
 use App\Models\Book;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -37,6 +38,26 @@ class BookController extends Controller
     // LIST METHORD - GET
     public function listBook()
     {
+        $book = Book::get();
+
+        return response()->json([
+            'status' => 1,
+            'message' => 'All Books',
+            'data' => $book
+        ], 200);
+    }
+
+    // AUTHOR METHORD - GET
+    public function authorBook()
+    {
+        $author_id = auth()->user()->id;
+        $author_books = Author::find($author_id)->books;
+
+        return response()->json([
+            'status' => 1,
+            'message' => 'Author Books',
+            'data' => $author_books
+        ], 200);
     }
 
     // SINGLE BOOKS - GET
