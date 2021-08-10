@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Author;
+use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AuthorController extends Controller
 {
@@ -36,8 +38,31 @@ class AuthorController extends Controller
     }
 
     // LOGIN METHORD - POST
-    public function lgoin(Request $request)
+    public function login(Request $request)
     {
+        // Validation
+        $login_data = $request->validate([
+            'email' => 'required',
+            'password' => 'required',
+        ]);
+
+        // Validated Author Data
+        if (!Auth::attempt($login_data)) {
+            return response()->json([
+                'status' => 0,
+                'message' => "invalid Credentials"
+            ], 501);
+        }
+
+        // token
+        $token = Auth::user()->createToken("auth_token")->accessToken;
+
+        // send Response
+        return response()->json([
+            'status' => 1,
+            'message' => "Author Login Successfully",
+            'access_token' => $token
+        ], 200);
     }
 
     // PROFILE METHORD - GET
