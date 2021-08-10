@@ -10,4 +10,8 @@ class Book extends Model
     use HasFactory;
 
     public $timestamps = false;
+
+    protected $fillable = [
+        'author_id', 'title', 'description', 'book_cost'
+    ];
 }
