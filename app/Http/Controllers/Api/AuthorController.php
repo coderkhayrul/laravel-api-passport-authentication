@@ -74,11 +74,21 @@ class AuthorController extends Controller
             'status' => true,
             'message' => "User Profile data",
             'data' => $user_data
-        ]);
+        ], 200);
     }
 
-    // LOGOUT METHORD - GET
-    public function logout()
+    // LOGOUT METHORD - POST
+    public function logout(Request $request)
     {
+        // Get Token value
+        $token = $request->user()->token();
+
+        // revoke this token value
+        $token->revoke();
+
+        return response()->json([
+            'status' => true,
+            'message' => "Author Logout Succesfully",
+        ], 200);
     }
 }
