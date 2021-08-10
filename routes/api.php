@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 Route::post('/register', [AuthorController::class, 'register']);
 Route::post('/login', [AuthorController::class, 'login']);
 
-Route::group(['middleware'['auth:api']], function () {
+Route::group(['middleware' => ['auth:api']], function () {
     Route::get('/profile', [AuthorController::class, 'profile']);
     Route::get('/logout', [AuthorController::class, 'logout']);
 
